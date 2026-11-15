@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "data:fetch": "node scripts/fetch-nasa.mjs"
+    "data:fetch": "node scripts/fetch-nasa.mjs",
+    "check:offline": "npm run build && node -e \"console.log('Manual check: run npm run preview, set DevTools Network to Offline, then reload the app.')\""
   },
   "dependencies": {
     "@fontsource-variable/fredoka": "5.2.6",

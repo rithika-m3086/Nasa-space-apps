@@ -38,7 +38,8 @@ export function getMissionHistory(state) {
 }
 
 export function attachMissionHistory(state, historySource) {
-  return { ...state, [HISTORY]: historySource[HISTORY] || [] };
+  const history = Array.isArray(historySource) ? historySource : historySource[HISTORY] || [];
+  return { ...state, [HISTORY]: history };
 }
 
 export function createMission(inputConfig = {}) {

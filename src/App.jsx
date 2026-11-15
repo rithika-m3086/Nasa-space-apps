@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMission, selectAllocationTip } from './store/useMission.js';
 import { getDailySeed } from './engine/index.js';
@@ -12,13 +12,16 @@ import DevGallery from './screens/DevGallery.jsx';
 import Allocate from './screens/Allocate.jsx';
 import Briefing from './screens/Briefing.jsx';
 import CheckIn from './screens/CheckIn.jsx';
-import Ended from './screens/Ended.jsx';
 import EventCard from './screens/EventCard.jsx';
 import Report from './screens/Report.jsx';
 import Title from './screens/Title.jsx';
 import { usePrefs } from './screens/usePrefs.js';
 import { speak } from './voice/speak.js';
 import './screens/flow.css';
+
+const Debrief = lazy(() => import('./screens/Debrief.jsx'));
+const Certificate = lazy(() => import('./screens/Certificate.jsx'));
+const PatchDesigner = lazy(() => import('./screens/PatchDesigner.jsx'));
 
 function stateScreen(state) {
   if (state.status === 'idle') return 'title';
@@ -102,6 +105,23 @@ export default function App() {
   if (hash === '#/teacher') {
     screenKey = 'teacher';
     screen = <ReservedScreen title="Classroom tools" text="Teacher tools are getting ready for your class." />;
+  } else if (hash === '#/certificate') {
+    screenKey = 'certificate';
+    screen = (
+      <Suspense fallback={<Card className="mx-auto max-w-2xl text-center">Loading your certificate...</Card>}>
+        <Certificate />
+      </Suspense>
+    );
+  } else if (hash === '#/patch') {
+    screenKey = 'patch';
+    screen = (
+      <Suspense fallback={<Card className="mx-auto max-w-2xl text-center">Loading your patch designer...</Card>}>
+        <PatchDesigner />
+      </Suspense>
+    );
+  } else if (hash === '#/stickers') {
+    screenKey = 'stickers';
+    screen = <ReservedScreen title="Sticker album" text="Your sticker album is getting ready." />;
   } else if (hash === '#/safe') {
     screenKey = 'safe';
     screen = (
@@ -155,7 +175,11 @@ export default function App() {
   } else if (screenKey === 'report') {
     screen = <Report />;
   } else if (screenKey === 'ended') {
-    screen = <Ended onPlayAgain={playAgain} />;
+    screen = (
+      <Suspense fallback={<Card className="mx-auto max-w-2xl text-center">Loading your mission report...</Card>}>
+        <Debrief onPlayAgain={playAgain} />
+      </Suspense>
+    );
   } else {
     screenKey = 'allocate';
     screen = <Allocate />;

@@ -1,4 +1,4 @@
-import { placeholderEvents } from '../data/events.placeholder.js';
+import { events } from '../data/events.js';
 import { BALANCE } from './balance.js';
 import { updateCrewMood } from './crew.js';
 import { createRng } from './rng.js';
@@ -49,11 +49,10 @@ export function applyAllocation(state) {
 }
 
 function getEventForDay(config, day) {
-  const events = placeholderEvents.filter((event) => event.sites.includes(config.site));
   const rng = createRng(`${config.seed}|${config.site}|${config.difficulty}`);
-  let event;
-  for (let index = 0; index < day; index += 1) event = rng.pick(events);
-  return event;
+  const siteEvents = events.filter((event) => event.sites.includes(config.site));
+  const shuffled = rng.shuffle(siteEvents);
+  return shuffled[(day - 1) % shuffled.length];
 }
 
 function appendDayLog(state, optionId = null) {
@@ -176,10 +175,16 @@ export function activateSafeMode(state) {
     life: clampGauge(state.gauges.life + BALANCE.safeModeBoost.life),
     shield: clampGauge(state.gauges.shield + BALANCE.safeModeBoost.shield),
   };
+  const dayLog = state.dayLog.some((entry) => entry.day === state.day)
+    ? state.dayLog.map((entry) => (entry.day === state.day
+      ? { ...entry, gauges: { ...gauges }, science: state.science }
+      : entry))
+    : state.dayLog;
   return {
     ...state,
     safeModeAvailable: false,
     gauges,
+    dayLog,
     available: gauges.power + state.energyToday,
     crew: updateCrewMood(state.crew, gauges),
   };
@@ -194,10 +199,12 @@ export function rewindMission(state, day) {
   ) return state;
   const snapshot = getMissionHistory(state).find((entry) => entry.day === day);
   if (!snapshot) return state;
+  const history = getMissionHistory(state).filter((entry) => entry.day < day);
+  history.push(snapshot);
   const rewound = {
     ...snapshot,
+    profile: state.profile,
     rewindTokens: state.rewindTokens - 1,
-    safeModeAvailable: state.safeModeAvailable,
   };
-  return attachMissionHistory(rewound, state);
+  return attachMissionHistory(rewound, history);
 }

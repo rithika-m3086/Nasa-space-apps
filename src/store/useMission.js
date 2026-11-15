@@ -1,17 +1,34 @@
 import { create } from 'zustand';
-import { fixtureDebrief, fixtureStickerCatalog } from '../data/fixtures.js';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import { fetchRealSun as getLiveSun } from '../data/liveSun.js';
 import {
   BALANCE,
   activateSafeMode,
   autoBalance as getBalancedAllocation,
   createMission,
   endDay,
+  getDailySeed,
   lockAllocation as runAllocation,
   normalizeClassCode,
   resolveOption,
   rewindMission,
-  selectAllocationTip as getAllocationTip,
 } from '../engine/index.js';
+import { updateProfileAndStickers } from './missionSelectors.js';
+
+const NO_REWINDS_TIP = 'No rewinds left. You can still learn from this run.';
+const noBrowserStorage = {
+  getItem: () => null,
+  setItem: () => {},
+  removeItem: () => {},
+};
+
+function getMissionStorage() {
+  try {
+    return typeof window === 'undefined' ? noBrowserStorage : window.localStorage;
+  } catch {
+    return noBrowserStorage;
+  }
+}
 
 function initialStateFromLocation() {
   const config = {
@@ -45,60 +62,20 @@ function initialStateFromLocation() {
   return state;
 }
 
-export const selectDayLabel = (site) => (site === 'mars' ? 'Sol' : 'Day');
-
-export function selectAllocationTip(state) {
-  return getAllocationTip(state);
-}
-
-export function selectDebrief(state) {
-  const humanSeries = Array.from({ length: BALANCE.days }, (_, index) => {
-    const day = index + 1;
-    const log = state.dayLog.find((entry) => entry.day === day);
-    return log
-      ? { day, ...log.gauges, science: log.science }
-      : fixtureDebrief.humanSeries[index];
-  });
-  return {
-    ...fixtureDebrief,
-    rank: state.rank || fixtureDebrief.rank,
-    survived: state.endReason !== 'life_zero',
-    days: state.dayLog.length || state.day,
-    humanSeries,
-    shareCode: selectShareCode(state),
-    stickersEarned: [...state.profile.stickers],
-  };
-}
-
-export function selectStickerCatalog(state) {
-  return fixtureStickerCatalog.map((sticker) => ({
-    ...sticker,
-    unlocked: state.profile.stickers.includes(sticker.id),
-  }));
-}
-
-export const selectShouldSuggestBreak = (state) => state.profile.sessionMissions >= 3;
-
-export function selectShareCode(state) {
-  const siteCode = state.config.site === 'mars' ? 'R' : 'M';
-  const seedCode = String(state.config.seed || 'MISSION')
-    .replace(/[^a-z0-9]/gi, '')
-    .toUpperCase()
-    .slice(-6);
-  return `AP-${siteCode}-${seedCode}`;
-}
-
-export const useMission = create((set, get) => ({
+export const useMission = create(persist((set, get) => ({
   ...initialStateFromLocation(),
   startMission: (config) => {
     const previous = get().profile;
-    const mission = createMission(config);
+    const missionConfig = { ...config };
+    if (missionConfig.mode === 'daily') missionConfig.seed = getDailySeed();
+    if (missionConfig.mode === 'class') missionConfig.seed = normalizeClassCode(missionConfig.seed);
+    const mission = createMission(missionConfig);
     mission.profile = {
       ...previous,
       missionsPlayed: previous.missionsPlayed + 1,
       sessionMissions: previous.sessionMissions + 1,
     };
-    set(mission);
+    set(updateProfileAndStickers(mission));
   },
   adjustAllocation: (key, delta) => {
     if (!['life', 'shield', 'science'].includes(key) || !Number.isFinite(delta)) return;
@@ -113,26 +90,48 @@ export const useMission = create((set, get) => ({
     set({ allocation: { ...state.allocation, [key]: value } });
   },
   autoBalance: () => set({ allocation: getBalancedAllocation(get()) }),
-  lockAllocation: () => set(runAllocation(get())),
-  chooseOption: (optionId) => set(resolveOption(get(), optionId)),
-  nextDay: () => set(endDay(get())),
+  lockAllocation: () => set(updateProfileAndStickers(runAllocation(get()))),
+  chooseOption: (optionId) => set(updateProfileAndStickers(resolveOption(get(), optionId))),
+  nextDay: () => set(updateProfileAndStickers(endDay(get()))),
   activateSafeMode: () => set(activateSafeMode(get())),
-  rewindTo: (day) => set(rewindMission(get(), day)),
+  rewindTo: (day) => {
+    const state = get();
+    if (state.rewindTokens <= 0) {
+      const lastOutcome = state.lastOutcome || {
+        optionId: null,
+        effects: { power: 0, life: 0, shield: 0, science: 0 },
+        why: NO_REWINDS_TIP,
+      };
+      set({ lastOutcome: { ...lastOutcome, capcom: NO_REWINDS_TIP } });
+      return;
+    }
+    const rewound = rewindMission(state, day);
+    if (rewound !== state) set(updateProfileAndStickers(rewound));
+  },
   resetMission: () => {
     const { config, profile } = get();
     set({ ...createMission(config), profile });
   },
-  fetchRealSun: () => {
+  fetchRealSun: async () => {
     set((state) => ({
-      live: {
-        sun: {
-          ...state.live.sun,
-          status: 'fallback',
-          source: 'snapshot',
-        },
-      },
+      live: { sun: { ...state.live.sun, status: 'loading' } },
     }));
+    const sun = await getLiveSun();
+    set({ live: { sun } });
   },
+}), {
+  name: 'aphelion.v1',
+  storage: createJSONStorage(getMissionStorage),
+  partialize: (state) => ({ profile: state.profile }),
 }));
 
 export { normalizeClassCode };
+export {
+  parseShareCode,
+  selectAllocationTip,
+  selectDayLabel,
+  selectDebrief,
+  selectShareCode,
+  selectShouldSuggestBreak,
+  selectStickerCatalog,
+} from './missionSelectors.js';
