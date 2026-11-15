@@ -1,32 +1,125 @@
-.tutorial-backdrop {
+.oc-first-mission {
   position: fixed;
   z-index: 40;
-  inset: 0;
-  background: rgb(3 7 18 / 76%);
-  pointer-events: auto;
-}
-
-.tutorial-spotlight {
-  position: relative !important;
-  z-index: 45 !important;
-  border-radius: 1.25rem;
-  outline: 4px solid var(--color-science);
-  box-shadow: 0 0 0 100vmax rgb(3 7 18 / 76%);
-}
-
-.tutorial-panel {
-  position: fixed;
-  z-index: 50;
   right: max(1rem, calc((100vw - 42rem) / 2));
   bottom: 1rem;
   left: max(1rem, calc((100vw - 42rem) / 2));
-  margin: 0 auto;
   width: min(100% - 2rem, 42rem);
-  pointer-events: auto;
+  margin-inline: auto;
+}
+
+.oc-play {
+  position: relative;
+}
+
+.oc-play__settings {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  right: 0;
+}
+
+.oc-play__header {
+  min-height: 3rem;
+  padding-right: 3.75rem;
+}
+
+.oc-play__gauges {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.oc-play__gauge {
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  border: 2px solid rgb(217 222 238 / 18%);
+  border-radius: 1.25rem;
+  padding: 0.5rem 0.2rem;
+  background: rgb(18 24 48 / 55%);
+}
+
+.oc-play__gauge-title {
+  display: flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: var(--gauge-color);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.oc-play__meter-track {
+  width: 88%;
+  height: 0.4rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 35%);
+}
+
+.oc-play__meter-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--gauge-color);
+}
+
+.tutorial-spotlight {
+  position: relative;
+  z-index: 10;
+  border-radius: 1rem;
+  outline: 3px solid var(--color-science);
+  outline-offset: 3px;
+  animation: tutorial-pulse 1.8s ease-in-out infinite;
+}
+
+.tutorial-spotlight--still {
+  animation: none;
+}
+
+.oc-first-mission__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.oc-option-preview {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.oc-option-preview__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.oc-option-preview__tag {
+  flex: none;
+  color: var(--color-text);
+  font-size: 0.75rem;
+}
+
+@keyframes tutorial-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(124 255 107 / 18%); }
+  50% { box-shadow: 0 0 0 8px rgb(124 255 107 / 40%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .tutorial-spotlight {
-    scroll-behavior: auto !important;
+    animation: none;
   }
+}
+
+html[data-motion='reduce'] .tutorial-spotlight {
+  animation: none;
 }

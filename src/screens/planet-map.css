@@ -1,0 +1,110 @@
+.oc-planet-map {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+  max-width: 52rem;
+  margin-inline: auto;
+  overflow: hidden;
+  text-align: center;
+}
+
+.oc-planet-map__intro,
+.oc-planet-map__choices,
+.oc-planet-map__back {
+  position: relative;
+  z-index: 1;
+}
+
+.oc-planet-map__orbits {
+  position: absolute;
+  inset: 12% 0 auto;
+  width: 100%;
+  height: 75%;
+  fill: var(--color-moon);
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.oc-planet-map__orbits path {
+  fill: none;
+  stroke: rgb(217 222 238 / 46%);
+  stroke-dasharray: 4 10;
+  stroke-width: 2;
+}
+
+.oc-planet-map__choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.65rem, 3vw, 1.5rem);
+}
+
+.oc-planet-map__button {
+  width: 100%;
+  min-width: 0;
+  min-height: 12rem;
+  flex-direction: column;
+  gap: 0.85rem;
+  border-width: 3px;
+  border-color: rgb(217 222 238 / 46%);
+  background: rgb(25 24 69 / 92%);
+}
+
+.oc-planet-map__button:hover {
+  border-color: var(--color-power);
+}
+
+.oc-planet-map__orb {
+  position: relative;
+  display: block;
+  width: clamp(4.5rem, 19vw, 7rem);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 3px solid rgb(255 255 255 / 54%);
+  border-radius: 50%;
+  box-shadow: inset -0.75rem -0.45rem 0 rgb(16 19 51 / 25%);
+}
+
+.oc-planet-map__orb--moon {
+  background: radial-gradient(circle at 32% 28%, #F7F8FF, var(--color-moon) 58%, #9EA8CB);
+}
+
+.oc-planet-map__orb--moon span {
+  position: absolute;
+  top: 24%;
+  left: 22%;
+  width: 18%;
+  height: 18%;
+  border-radius: 50%;
+  background: rgb(127 137 173 / 38%);
+  box-shadow: 1.6rem 1rem 0 -0.2rem rgb(127 137 173 / 34%), 2.5rem -0.6rem 0 -0.4rem rgb(127 137 173 / 30%);
+}
+
+.oc-planet-map__orb--mars {
+  background: radial-gradient(circle at 32% 28%, #FFD5BE, var(--color-mars) 55%, #CC705D);
+}
+
+.oc-planet-map__orb--mars span {
+  position: absolute;
+  right: 0;
+  bottom: 15%;
+  left: 0;
+  height: 20%;
+  border-radius: 50%;
+  background: rgb(151 66 64 / 35%);
+  transform: rotate(-15deg);
+}
+
+.oc-planet-map__back .oc-button {
+  min-width: 7rem;
+}
+
+@media (max-width: 360px) {
+  .oc-planet-map {
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .oc-planet-map__button {
+    min-height: 10rem;
+  }
+}

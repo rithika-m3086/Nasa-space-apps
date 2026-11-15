@@ -34,10 +34,10 @@ function FactLine({ fact }) {
   );
 }
 
-export default function CheckIn({ onStart, onBack }) {
+export default function CheckIn({ onStart, onBack, initialSite = 'moon' }) {
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('cyan');
-  const [site, setSite] = useState('moon');
+  const [site, setSite] = useState(initialSite);
   const [difficulty, setDifficulty] = useState('cadet');
   const [surpriseCount, setSurpriseCount] = useState(0);
   const nameValue = name.trim() || 'Cadet Nova';

@@ -11,7 +11,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: var(--color-bg);
+  background: linear-gradient(180deg, var(--color-sky-top) 0%, var(--color-bg) 78%);
+  background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-body);
 }
@@ -37,6 +38,8 @@ input {
   min-height: 100vh;
   isolation: isolate;
   overflow: hidden;
+  background-color: var(--color-bg);
+  background-image: linear-gradient(180deg, var(--color-sky-top) 0%, var(--color-bg) 78%);
 }
 
 .oc-page__content {
@@ -52,10 +55,11 @@ input {
   min-height: 18rem;
   align-content: start;
   gap: 1rem;
-  border: 1px solid rgb(154 166 209 / 18%);
+  border: 3px solid rgb(217 222 238 / 34%);
   border-radius: var(--radius-card);
   padding: clamp(1rem, 3vw, 1.5rem);
-  background: var(--color-panel);
+  background: linear-gradient(145deg, var(--color-panel-raised), var(--color-panel) 76%);
+  box-shadow: var(--shadow-card);
 }
 
 .oc-screen-skeleton__line,
@@ -104,13 +108,21 @@ input {
   letter-spacing: 0.01em;
 }
 
+.oc-panel {
+  border: 3px solid rgb(217 222 238 / 34%);
+  border-radius: 28px;
+  background: linear-gradient(145deg, var(--color-panel-raised), var(--color-panel) 76%);
+  box-shadow: var(--shadow-card);
+}
+
 .oc-card {
   min-width: 0;
   padding: clamp(1rem, 3vw, 1.5rem);
-  border: 1px solid rgb(154 166 209 / 18%);
-  border-radius: var(--radius-card);
-  background: rgb(21 27 54 / 92%);
-  box-shadow: var(--shadow-card);
+}
+
+.oc-card.oc-panel {
+  border-width: 3px;
+  border-radius: 28px;
 }
 
 .oc-button {
@@ -119,13 +131,13 @@ input {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  border: 1px solid transparent;
+  border: 2px solid rgb(217 222 238 / 28%);
   border-radius: var(--radius-control);
   padding: 0.7rem 1rem;
   color: var(--color-text);
   font-weight: 650;
   cursor: pointer;
-  transition: background-color 160ms ease, border-color 160ms ease, transform 180ms var(--spring);
+  transition: background-color 160ms ease, border-color 160ms ease, transform 180ms var(--spring), filter 160ms ease;
 }
 
 .oc-button:disabled {
@@ -134,21 +146,53 @@ input {
 }
 
 .oc-button--primary {
-  background: var(--color-accent);
-  box-shadow: 0 8px 24px rgb(139 92 246 / 28%);
+  border-color: rgb(255 255 255 / 28%);
+  background: linear-gradient(180deg, #A787FF, var(--color-accent));
+  box-shadow: 0 4px 0 rgb(55 38 116 / 60%);
 }
 
 .oc-button--secondary {
-  border-color: rgb(154 166 209 / 30%);
-  background: var(--color-panel-raised);
+  border-color: rgb(217 222 238 / 42%);
+  background: linear-gradient(180deg, var(--color-panel-raised), var(--color-panel));
 }
 
 .oc-button--ghost {
+  border-color: transparent;
   background: transparent;
 }
 
+.title-actions {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.title-actions .title-how-button {
+  min-height: 48px;
+  border-color: #F5F7FF;
+  background: #151B36;
+  color: #F5F7FF;
+}
+
+.title-actions .title-start-button {
+  min-height: 56px;
+  border-color: #FFD23F;
+  background: #FFD23F;
+  box-shadow: none;
+  color: #0B1020;
+  font-size: 22px;
+  font-weight: 700;
+}
+
 .oc-button:not(:disabled):hover {
-  filter: brightness(1.12);
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.oc-button:focus-visible {
+  outline: 3px solid var(--color-shield);
+  outline-offset: 3px;
 }
 
 .oc-icon-button {
@@ -224,4 +268,29 @@ input {
 
 .oc-gauge__low .oc-gauge__visual {
   animation: gentle-pulse 2.8s ease-in-out infinite;
+}
+
+.oc-page a.inline-flex {
+  min-height: 48px;
+}
+
+.oc-page select,
+.oc-page textarea,
+.oc-page input:not([type='range']) {
+  border-color: var(--color-outline);
+  border-radius: var(--radius-control);
+  background-color: var(--color-panel-raised);
+  color: var(--color-text);
+}
+
+svg:not(.oc-starfield) {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.oc-modal li,
+.oc-card li.rounded-xl {
+  border-color: rgb(217 222 238 / 30%);
+  border-radius: 1.25rem;
+  background-color: var(--color-panel-raised);
 }

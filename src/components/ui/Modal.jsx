@@ -61,7 +61,7 @@ export default function Modal({ open, onClose, title, children }) {
     >
       <section
         ref={dialogRef}
-        className="oc-modal"
+        className="oc-modal oc-panel"
         role="dialog"
         aria-modal="true"
         aria-labelledby="oc-modal-title"

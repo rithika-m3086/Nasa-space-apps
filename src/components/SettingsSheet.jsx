@@ -17,7 +17,7 @@ const voiceOptions = [
 ];
 const textOptions = ['A', 'A+', 'A++'];
 
-export default function SettingsSheet() {
+export default function SettingsSheet({ onReplayTutorial }) {
   const [open, setOpen] = useState(false);
   const preferences = usePrefs();
   const patch = preferences.patch;
@@ -122,6 +122,17 @@ export default function SettingsSheet() {
           >
             Test voice
           </BigButton>
+          {onReplayTutorial && (
+            <BigButton
+              variant="secondary"
+              onClick={() => {
+                setOpen(false);
+                onReplayTutorial();
+              }}
+            >
+              Replay the tutorial
+            </BigButton>
+          )}
         </div>
       </Modal>
     </>
