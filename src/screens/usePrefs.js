@@ -9,6 +9,7 @@ const initialPreferences = {
   lang: 'en-US',
   textScale: 'A',
   tutorialSeen: false,
+  patchDesign: null,
 };
 
 export const usePrefs = create(
@@ -22,7 +23,7 @@ export const usePrefs = create(
       storage: createJSONStorage(() => (
         typeof window === 'undefined' ? undefined : window.localStorage
       )),
-      partialize: ({ muted, volume, reducedMotion, readAloud, lang, textScale, tutorialSeen }) => ({
+      partialize: ({
         muted,
         volume,
         reducedMotion,
@@ -30,6 +31,16 @@ export const usePrefs = create(
         lang,
         textScale,
         tutorialSeen,
+        patchDesign,
+      }) => ({
+        muted,
+        volume,
+        reducedMotion,
+        readAloud,
+        lang,
+        textScale,
+        tutorialSeen,
+        patchDesign,
       }),
     },
   ),

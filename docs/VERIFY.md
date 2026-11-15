@@ -3,3 +3,8 @@
 - [ ] TODO-VERIFY: Locate the NTRS Baseline Values and Assumptions Document URL and verify its intended use.
 - [ ] TODO-VERIFY: Locate authoritative Mars REMS documentation and verify the source metadata.
 - [ ] TODO-VERIFY: Confirm DONKI FLR/CME access with DEMO_KEY or NASA_API_KEY; current fetch returns HTTP 404/400 and writes null-valued placeholder records.
+- [ ] TODO-VERIFY: Verify NASA SDO/EVE, SDO/AIA, and MAVEN/SEP source pages for solar-flare and Mars particle events.
+- [ ] TODO-VERIFY: Verify LRO/LROC and LADEE/LDEX source pages for Moon impacts, rover maps, and lunar dust.
+- [ ] TODO-VERIFY: Verify MRO/MARCI and MRO/Electra source pages, including the 4-24 minute Mars message delay.
+- [ ] TODO-VERIFY: Verify Perseverance/MOXIE and ISS Veggie experiment source pages.
+- [ ] TODO-VERIFY: Verify ISS crew health survey and Actiwatch sources for crew rest and well-being facts.
