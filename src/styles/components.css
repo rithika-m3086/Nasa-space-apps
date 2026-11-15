@@ -47,6 +47,58 @@ input {
   padding-block: 2rem 4rem;
 }
 
+.oc-screen-skeleton {
+  display: grid;
+  min-height: 18rem;
+  align-content: start;
+  gap: 1rem;
+  border: 1px solid rgb(154 166 209 / 18%);
+  border-radius: var(--radius-card);
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: var(--color-panel);
+}
+
+.oc-screen-skeleton__line,
+.oc-screen-skeleton__panel {
+  display: block;
+  min-height: 1.2rem;
+  border-radius: 0.6rem;
+  background: var(--color-panel-raised);
+}
+
+.oc-screen-skeleton__line--title {
+  width: min(60%, 20rem);
+  min-height: 2.2rem;
+}
+
+.oc-screen-skeleton__line--short {
+  width: 65%;
+}
+
+.oc-screen-skeleton__panel {
+  min-height: 9rem;
+}
+
+.oc-error-boundary {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.oc-error-boundary__card {
+  display: grid;
+  width: min(100%, 34rem);
+  gap: 1rem;
+  border: 1px solid rgb(154 166 209 / 18%);
+  border-radius: var(--radius-card);
+  padding: clamp(1.25rem, 5vw, 2rem);
+  background: var(--color-panel);
+  text-align: center;
+}
+
 .oc-display {
   font-family: var(--font-display);
   letter-spacing: 0.01em;
