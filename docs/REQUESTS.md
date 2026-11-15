@@ -9,3 +9,5 @@ Contract/component check:
 1. No contract field, action, selector, or event-shape mismatch found; existing HUD components remain compatible.
 2. `useMission` starts with `status: 'running'` despite `missionsPlayed: 0`; App must show Title for a new profile without changing the store.
 3. `fetchRealSun()` currently selects the saved snapshot fallback, so the banner must not claim live data.
+
+G9 request for Rithika: update root-owned `index.html` with the requested description, `#0B1020` theme color, Open Graph metadata, noscript notice, `/favicon.svg` link, and manifest links to the generated app icons.

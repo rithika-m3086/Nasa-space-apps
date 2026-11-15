@@ -1,0 +1,224 @@
+.oc-route-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.oc-route-nav a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text);
+  background: var(--color-panel);
+  text-decoration: none;
+}
+
+.oc-route-nav a:hover,
+.oc-route-nav a:focus-visible {
+  outline: 2px solid var(--color-science);
+  outline-offset: 2px;
+}
+
+.oc-unlock-toast {
+  position: fixed;
+  z-index: 60;
+  top: 1rem;
+  left: 50%;
+  max-width: calc(100vw - 2rem);
+  transform: translateX(-50%);
+  border: 1px solid var(--color-science);
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  background: var(--color-panel);
+  color: var(--color-text);
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 0.5rem 2rem rgb(0 0 0 / 35%);
+}
+
+.oc-sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+}
+
+.oc-sticker {
+  display: grid;
+  width: 100%;
+  min-height: 108px;
+  justify-items: center;
+  align-content: center;
+  gap: 0.5rem;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 1rem;
+  background: var(--color-panel-raised);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.oc-sticker:focus-visible,
+.oc-sticker:not(:disabled):hover {
+  outline: 2px solid var(--color-science);
+  outline-offset: 2px;
+}
+
+.oc-sticker--locked {
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.oc-sticker__art {
+  position: relative;
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 9%);
+}
+
+.oc-sticker__lock {
+  position: absolute;
+  right: -0.25rem;
+  bottom: -0.25rem;
+}
+
+.oc-sticker--locked .oc-sticker__art {
+  filter: grayscale(1);
+  opacity: 0.48;
+}
+
+.oc-sticker__name {
+  font-weight: 700;
+}
+
+.oc-source-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--color-science);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.oc-source-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.oc-teacher-step {
+  display: grid;
+  min-height: 100px;
+  align-content: start;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  background: var(--color-panel-raised);
+  padding: 1rem;
+}
+
+.oc-share-input {
+  width: 100%;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 0.75rem;
+  background: var(--color-panel-raised);
+  color: var(--color-text);
+  padding: 0.75rem;
+}
+
+.oc-share-input:focus-visible {
+  outline: 2px solid var(--color-science);
+  outline-offset: 2px;
+}
+
+.oc-results-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.oc-results-table th,
+.oc-results-table td {
+  border: 1px solid rgb(255 255 255 / 18%);
+  padding: 0.65rem;
+  text-align: left;
+}
+
+.oc-results-table th {
+  background: var(--color-panel-raised);
+}
+
+.oc-orbit-actions {
+  display: flex;
+  width: 100%;
+  gap: 0.75rem;
+}
+
+.oc-orbit-actions > button {
+  flex: 1;
+  min-height: 48px;
+}
+
+.oc-breathing-orbit {
+  width: 8rem;
+  height: 8rem;
+  border: 5px solid var(--color-science);
+  border-radius: 50%;
+  background: rgb(116 226 207 / 16%);
+  animation: oc-breathe 10s ease-in-out 3;
+}
+
+.oc-breathing-orbit--still {
+  animation: none;
+}
+
+@keyframes oc-breathe {
+  0%, 100% { transform: scale(0.78); }
+  40% { transform: scale(1.08); }
+}
+
+@media (min-width: 640px) {
+  .oc-sticker-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .oc-page__content > header,
+  .oc-page__content > footer,
+  .oc-page__content > div[aria-live],
+  .oc-page__content button,
+  .oc-page__content textarea,
+  .oc-page__content .oc-route-nav,
+  .oc-page__content .oc-unlock-toast {
+    display: none !important;
+  }
+
+  .oc-page,
+  .oc-page__content,
+  .oc-page__content section,
+  .oc-page__content section > div {
+    min-height: 0 !important;
+    max-width: none !important;
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  .oc-page__content section > div {
+    break-inside: avoid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oc-breathing-orbit {
+    animation: none;
+  }
+}
