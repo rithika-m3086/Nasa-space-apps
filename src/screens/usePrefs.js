@@ -1,25 +1,36 @@
-import { useCallback, useEffect, useState } from 'react';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
-let reducedMotionOverride = null;
-const listeners = new Set();
+const initialPreferences = {
+  muted: false,
+  volume: 0.55,
+  reducedMotion: 'auto',
+  readAloud: 'off',
+  lang: 'en-US',
+  textScale: 'A',
+  tutorialSeen: false,
+};
 
-export function usePrefs() {
-  const [reducedMotion, setValue] = useState(reducedMotionOverride);
-
-  useEffect(() => {
-    const listener = (value) => setValue(value);
-    listeners.add(listener);
-    return () => listeners.delete(listener);
-  }, []);
-
-  const setReducedMotion = useCallback((value) => {
-    reducedMotionOverride = value == null ? null : Boolean(value);
-    if (typeof document !== 'undefined') {
-      if (reducedMotionOverride == null) document.documentElement.removeAttribute('data-motion');
-      else document.documentElement.setAttribute('data-motion', reducedMotionOverride ? 'reduce' : 'full');
-    }
-    listeners.forEach((listener) => listener(reducedMotionOverride));
-  }, []);
-
-  return { reducedMotion, setReducedMotion };
-}
+export const usePrefs = create(
+  persist(
+    (set) => ({
+      ...initialPreferences,
+      patch: (preferences) => set((state) => ({ ...state, ...preferences })),
+    }),
+    {
+      name: 'aphelion.prefs',
+      storage: createJSONStorage(() => (
+        typeof window === 'undefined' ? undefined : window.localStorage
+      )),
+      partialize: ({ muted, volume, reducedMotion, readAloud, lang, textScale, tutorialSeen }) => ({
+        muted,
+        volume,
+        reducedMotion,
+        readAloud,
+        lang,
+        textScale,
+        tutorialSeen,
+      }),
+    },
+  ),
+);

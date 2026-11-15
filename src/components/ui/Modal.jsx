@@ -3,7 +3,7 @@ import { X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import BigButton from './BigButton.jsx';
 
-const FOCUSABLE = 'button:not(:disabled), a[href], input:not(:disabled), [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE = 'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])';
 
 export default function Modal({ open, onClose, title, children }) {
   const dialogRef = useRef(null);

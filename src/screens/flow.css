@@ -1,0 +1,32 @@
+.tutorial-backdrop {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  background: rgb(3 7 18 / 76%);
+  pointer-events: auto;
+}
+
+.tutorial-spotlight {
+  position: relative !important;
+  z-index: 45 !important;
+  border-radius: 1.25rem;
+  outline: 4px solid var(--color-science);
+  box-shadow: 0 0 0 100vmax rgb(3 7 18 / 76%);
+}
+
+.tutorial-panel {
+  position: fixed;
+  z-index: 50;
+  right: max(1rem, calc((100vw - 42rem) / 2));
+  bottom: 1rem;
+  left: max(1rem, calc((100vw - 42rem) / 2));
+  margin: 0 auto;
+  width: min(100% - 2rem, 42rem);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tutorial-spotlight {
+    scroll-behavior: auto !important;
+  }
+}

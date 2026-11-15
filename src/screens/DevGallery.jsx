@@ -17,13 +17,8 @@ import {
   Toggle,
 } from '../components/ui/index.js';
 import { usePrefs } from './usePrefs.js';
-
-function speak(text) {
-  if (typeof window !== 'undefined' && window.speechSynthesis) {
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
-  }
-}
+import CitationsModal from '../components/CitationsModal.jsx';
+import SettingsSheet from '../components/SettingsSheet.jsx';
 
 function updateScene(patch) {
   useMission.setState((state) => ({ ...state, ...patch }));
@@ -71,11 +66,14 @@ export default function DevGallery() {
             <h1 className="oc-display text-4xl sm:text-5xl">Mission Control HUD</h1>
             <p className="mt-2 text-[var(--color-muted)]">A friendly test flight for every component.</p>
           </div>
-          <Toggle
-            label="Reduced motion"
-            checked={Boolean(prefs.reducedMotion)}
-            onChange={prefs.setReducedMotion}
-          />
+          <div className="flex items-center gap-3">
+            <Toggle
+              label="Reduced motion"
+              checked={prefs.reducedMotion === 'on'}
+              onChange={(value) => prefs.patch({ reducedMotion: value ? 'on' : 'off' })}
+            />
+            <SettingsSheet />
+          </div>
         </header>
 
         <div className="grid gap-5 lg:grid-cols-2">
@@ -191,7 +189,6 @@ export default function DevGallery() {
             <h2 className="oc-display mb-4 text-2xl">CAPCOM</h2>
             <CapcomBubble
               message={state.lastOutcome?.capcom || state.event?.kid || 'Welcome, Flight Director! Your crew is ready.'}
-              onSpeak={speak}
             />
           </Card>
 
@@ -220,6 +217,9 @@ export default function DevGallery() {
         <p className="mb-5 text-[var(--color-muted)]">Your crew is ready for the next step.</p>
         <BigButton onClick={() => setModalOpen(false)}>Sounds good</BigButton>
       </Modal>
+      <footer className="relative z-10 mt-8 flex justify-center border-t border-white/10 pt-4">
+        <CitationsModal />
+      </footer>
     </main>
   );
 }
