@@ -1,0 +1,23 @@
+{
+  "flareWave": {
+    "title": "Flare Wave",
+    "instruction": "Tap the flares before they reach the dome!",
+    "keyboardHint": "Press Space or Enter to tap the next flare.",
+    "tapFlare": "Tap flare",
+    "dome": "Dome",
+    "progress": "Wave progress",
+    "missed": "Almost! Try the next one.",
+    "starLabel": "stars",
+    "oneFlareTapped": "1 flare tapped",
+    "tappedCount": "{count} flares tapped",
+    "threeStarBadge": "Three-star badge earned!",
+    "suggestedChoice": "Your stars suggest:",
+    "starMatch": "Star match",
+    "results": {
+      "0": "Let's try a new plan together.",
+      "1": "You tapped a few flares. Great learning!",
+      "2": "Nice work! You tapped lots of flares!",
+      "3": "Amazing! You tapped most of the flares!"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Frown, Meh, Smile } from 'lucide-react';
+import Bolt from '../Bolt.jsx';
 
 export function getStatus(value) {
   if (value > 60) return 'great';
@@ -8,17 +8,16 @@ export function getStatus(value) {
 }
 
 const faceDetails = {
-  great: { label: 'Great', Icon: Smile },
-  ok: { label: 'OK', Icon: Meh },
-  low: { label: 'Low', Icon: Frown },
+  great: { label: 'Great', expression: 'cheering' },
+  ok: { label: 'OK', expression: 'thinking' },
+  low: { label: 'Low', expression: 'worried' },
 };
 
 export default function StatusFace({ value, status }) {
   const details = faceDetails[status || getStatus(value)];
-  const { Icon } = details;
   return (
     <span className={`oc-status oc-status--${status || getStatus(value)}`}>
-      <Icon aria-hidden="true" size={18} />
+      <Bolt expression={details.expression} size={24} />
       <span>{details.label}</span>
     </span>
   );

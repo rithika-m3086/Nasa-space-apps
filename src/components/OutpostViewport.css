@@ -2,10 +2,9 @@
   width: 100%;
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgb(154 166 209 / 24%);
-  border-radius: 1.25rem;
-  background: #0B1020;
-  box-shadow: 0 18px 48px rgb(3 7 18 / 28%);
+  border: 3px solid rgb(217 222 238 / 32%);
+  border-radius: 1.75rem;
+  background: var(--color-bg);
 }
 
 .outpost-viewport svg {

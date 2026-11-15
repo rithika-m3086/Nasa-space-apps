@@ -103,17 +103,17 @@ export default function OutpostViewport() {
         </desc>
         <defs>
           <linearGradient id="moon-sky" x2="0" y2="1">
-            <stop stopColor="#050813" />
-            <stop offset="1" stopColor="#202A42" />
+            <stop stopColor="#3B2F8F" />
+            <stop offset="1" stopColor="#0B1020" />
           </linearGradient>
           <linearGradient id="mars-sky" x2="0" y2="1">
-            <stop stopColor="#8B536B" />
-            <stop offset="0.62" stopColor="#D38A84" />
-            <stop offset="1" stopColor="#E7AA82" />
+            <stop stopColor="#FFB38A" />
+            <stop offset="0.62" stopColor="#F6C2A3" />
+            <stop offset="1" stopColor="#D98568" />
           </linearGradient>
           <linearGradient id="moon-ground" x2="0" y2="1">
-            <stop stopColor="#8B91A0" />
-            <stop offset="1" stopColor="#424958" />
+            <stop stopColor="#D9DEEE" />
+            <stop offset="1" stopColor="#70788F" />
           </linearGradient>
           <linearGradient id="mars-ground" x2="0" y2="1">
             <stop stopColor="#D5A05F" />
@@ -140,7 +140,7 @@ export default function OutpostViewport() {
               <circle key={`${x}-${y}`} cx={x} cy={y} r={index % 3 ? 2 : 3} fill="#F5F7FF" opacity={0.45 + (index % 4) * 0.12} />
             ))}
             <g aria-hidden="true">
-              <circle cx="1370" cy="170" r="80" fill="#D9F0FF" />
+              <circle cx="1370" cy="170" r="80" fill="#D9DEEE" />
               <path d="M1315 150q35-24 51 5t58 11q-9 55-68 69t-73-44q18-20 32-41Z" fill="#7AB8D9" />
               <circle cx="1370" cy="170" r="80" fill="none" stroke="#F5F7FF" strokeOpacity="0.5" strokeWidth="5" />
             </g>
@@ -154,7 +154,7 @@ export default function OutpostViewport() {
 
         <motion.g style={{ y: sunFloat }} opacity={0.28 + sunLevel * 0.72}>
           <circle cx="260" cy={sunHeight} r="92" fill="#FFD23F" opacity="0.15" />
-          <circle cx="260" cy={sunHeight} r="54" fill={moon ? '#F5F7FF' : '#FFE58A'} />
+          <circle cx="260" cy={sunHeight} r="54" fill={moon ? '#D9DEEE' : '#FFE58A'} />
           <circle cx="260" cy={sunHeight} r="37" fill="#FFF6C5" opacity={0.55} />
         </motion.g>
 

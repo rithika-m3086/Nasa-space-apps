@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useRef } from 'react';
+import { useMission } from '../store/useMission.js';
 import { useReducedMotion } from './ui/useReducedMotion.js';
 
 const STARS = Array.from({ length: 80 }, (_, index) => ({
@@ -12,6 +13,7 @@ const STARS = Array.from({ length: 80 }, (_, index) => ({
 export default function Starfield() {
   const canvasRef = useRef(null);
   const reducedMotion = useReducedMotion();
+  const site = useMission((state) => state.config.site);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -34,10 +36,18 @@ export default function Starfield() {
     const draw = (time = 0) => {
       if (document.hidden) return;
       context.clearRect(0, 0, width, height);
+      const haze = context.createLinearGradient(0, 0, 0, height);
+      const tint = site === 'mars' ? '255, 179, 138' : '217, 222, 238';
+      haze.addColorStop(0, `rgba(${tint}, ${site === 'mars' ? 0.13 : 0.08})`);
+      haze.addColorStop(1, `rgba(${tint}, 0)`);
+      context.fillStyle = haze;
+      context.fillRect(0, 0, width, height);
       STARS.forEach((star, index) => {
         const wave = reducedMotion ? 0 : Math.sin(time / 900 + star.phase);
         context.globalAlpha = 0.42 + (wave + 1) * 0.25;
-        context.fillStyle = index % 9 === 0 ? '#22D3EE' : '#F5F7FF';
+        context.fillStyle = index % 9 === 0
+          ? '#22D3EE'
+          : site === 'mars' ? '#FFB38A' : '#D9DEEE';
         context.beginPath();
         context.arc(star.x * width, star.y * height, star.radius, 0, Math.PI * 2);
         context.fill();
@@ -63,7 +73,7 @@ export default function Starfield() {
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibilityChange);
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, site]);
 
   return <canvas ref={canvasRef} className="oc-starfield" aria-hidden="true" />;
 }

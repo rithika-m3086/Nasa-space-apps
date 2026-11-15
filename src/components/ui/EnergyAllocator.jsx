@@ -1,6 +1,7 @@
 import React from 'react';
 import { HeartPulse, Leaf, Shield } from 'lucide-react';
 import { useMission } from '../../store/useMission.js';
+import { useReducedMotion } from './useReducedMotion.js';
 
 const rows = [
   { key: 'life', label: 'Life Support', Icon: HeartPulse },
@@ -8,21 +9,28 @@ const rows = [
   { key: 'science', label: 'Science', Icon: Leaf },
 ];
 
-export default function EnergyAllocator() {
+export default function EnergyAllocator({ focusedKey = null }) {
   const allocation = useMission((state) => state.allocation);
   const available = useMission((state) => state.available);
   const adjustAllocation = useMission((state) => state.adjustAllocation);
+  const reducedMotion = useReducedMotion();
   const spent = Object.values(allocation).reduce((sum, amount) => sum + amount, 0);
   const energyLeft = Math.max(0, available - spent);
+  const visibleRows = focusedKey ? rows.filter((row) => row.key === focusedKey) : rows;
 
   return (
     <section className="oc-allocator" aria-label="Energy allocation">
-      {rows.map(({ key, label, Icon }) => {
+      {visibleRows.map(({ key, label, Icon }) => {
         const value = allocation[key];
         const otherSpent = spent - value;
         const max = Math.floor(Math.max(0, available - otherSpent) / 5) * 5;
         return (
-          <div className="oc-allocator__row" key={key}>
+          <div
+            className={`oc-allocator__row${focusedKey === key ? ` tutorial-spotlight${reducedMotion ? ' tutorial-spotlight--still' : ''}` : ''}`}
+            data-tutorial-target={focusedKey === key ? key : undefined}
+            tabIndex={focusedKey === key ? -1 : undefined}
+            key={key}
+          >
             <label className="oc-allocator__label" htmlFor={`allocation-${key}`}>
               <Icon aria-hidden="true" size={20} />
               <span>{label}</span>

@@ -1,15 +1,12 @@
 import React from 'react';
+import { useCallback, useState } from 'react';
 import { useMission } from '../store/useMission.js';
-import { CheckCircle2, Scale, Sparkles } from 'lucide-react';
 import { BigButton, Card } from '../components/ui/index.js';
-import { sources } from '../data/sources.js';
+import FlareWave from '../components/FlareWave.jsx';
+import OptionPreview from '../components/OptionPreview.jsx';
 import nasaImages from '../data/nasa-images.json';
-
-const tagInfo = {
-  safe: { label: 'Careful plan', Icon: CheckCircle2 },
-  balanced: { label: 'Balanced plan', Icon: Scale },
-  risky: { label: 'Bold plan', Icon: Sparkles },
-};
+import copy from '../i18n/en.json';
+import { Star } from 'lucide-react';
 
 function findImage(nasaId) {
   return nasaImages.items.find((item) => item.nasa_id === nasaId);
@@ -18,13 +15,19 @@ function findImage(nasaId) {
 export default function EventCard() {
   const event = useMission((state) => state.event);
   const chooseOption = useMission((state) => state.chooseOption);
+  const flareClass = useMission((state) => state.live?.sun?.flareClass);
+  const [waveResult, setWaveResult] = useState(null);
+  const flareStars = waveResult?.event === event ? waveResult.stars : null;
+  const onWaveComplete = useCallback((stars) => setWaveResult({ event, stars }), [event]);
   const image = event?.image?.nasaId ? findImage(event.image.nasaId) : null;
-  const scienceSource = event?.science?.sourceId
-    ? sources.find((source) => source.id === event.science.sourceId)
-    : null;
   const safeThumbnail = image?.thumbnail_href && new URL(image.thumbnail_href).hostname === 'images-api.nasa.gov'
     ? image.thumbnail_href
     : null;
+  const hasFlareWave = Boolean(event && ['flare', 'dust'].includes(event.kind));
+  const recommendedTag = flareStars === 3 ? 'safe' : flareStars === 2 ? 'balanced' : 'risky';
+  const recommendedOption = !hasFlareWave || flareStars === null
+    ? null
+    : event?.options.find((option) => option.tag === recommendedTag) || null;
 
   if (!event) {
     return (
@@ -60,45 +63,49 @@ export default function EventCard() {
         )}
       </Card>
 
-      <section className="grid gap-3" aria-label="Choose what the crew should do">
-        {event.options.map((option) => {
-          const tag = tagInfo[option.tag] || tagInfo.balanced;
-          const Icon = tag.Icon;
-          return (
-            <BigButton
-              key={option.id}
-              variant="secondary"
-              className="w-full justify-start gap-4 p-4 text-left"
-              onClick={() => chooseOption(option.id)}
-            >
-              <Icon aria-hidden="true" className="shrink-0 text-[var(--color-science)]" size={24} />
-              <span className="grid gap-1">
-                <span className="font-bold">{option.label}</span>
-                <span className="text-sm text-[var(--color-muted)]">{option.hint} · {tag.label}</span>
-              </span>
-            </BigButton>
-          );
-        })}
-      </section>
+      {hasFlareWave && (
+        <FlareWave
+          key={event.id}
+          flareClass={flareClass}
+          onComplete={onWaveComplete}
+        />
+      )}
 
-      <Card>
-        <details>
-          <summary className="min-h-12 cursor-pointer py-3 font-semibold">Science Behind the Screen</summary>
-          <div className="grid gap-2 border-t border-white/10 pt-4">
-            <h2 className="oc-display text-xl">{event.science.headline}</h2>
-            <p><strong>Mission:</strong> {event.science.mission}</p>
-            <p><strong>Instrument:</strong> {event.science.instrument}</p>
-            <p>{event.science.fact}</p>
-            {scienceSource?.url.startsWith('http') ? (
-              <a className="inline-flex min-h-11 items-center text-[var(--color-power)] underline" href={scienceSource.url} target="_blank" rel="noreferrer">
-                Source: {scienceSource.title}
-              </a>
-            ) : (
-              <p className="text-sm text-[var(--color-warning)]">Source link needs review.</p>
-            )}
-          </div>
-        </details>
-      </Card>
+      {recommendedOption && (
+        <div className="flare-wave__suggestion" role="note">
+          <Star aria-hidden="true" fill="currentColor" size={20} />
+          <p>{copy.flareWave.suggestedChoice} <strong>{recommendedOption.label}</strong></p>
+        </div>
+      )}
+
+      {(!hasFlareWave || flareStars !== null) && (
+        <section className="grid gap-3" aria-label="Choose what the crew should do">
+          {event.options.map((option) => {
+            const isSuggested = option.id === recommendedOption?.id;
+            return (
+              <BigButton
+                key={option.id}
+                variant="secondary"
+                className={`w-full justify-start p-4 text-left${isSuggested ? ' flare-wave-option--suggested' : ''}`}
+                onClick={() => chooseOption(option.id)}
+              >
+                <span className="grid w-full gap-1">
+                  <span className="flex flex-wrap items-center gap-2 font-bold">
+                    {option.label}
+                    {isSuggested && (
+                      <span className="flare-wave__recommendation">
+                        <Star aria-hidden="true" fill="currentColor" size={16} />
+                        {copy.flareWave.starMatch}
+                      </span>
+                    )}
+                  </span>
+                  <OptionPreview option={option} />
+                </span>
+              </BigButton>
+            );
+          })}
+        </section>
+      )}
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function RealSunBanner() {
   const label = sun.source === 'live' ? 'Live from NASA' : 'Saved from NASA';
 
   return (
-    <aside className="rounded-2xl border border-white/10 bg-[var(--color-panel)] p-4" aria-live="polite">
+    <aside className="oc-panel p-4" aria-live="polite">
       <p className="font-semibold">{sun.text || 'Space-weather updates are ready.'}</p>
       <p className="mt-1 text-sm text-[var(--color-muted)]">
         {label} · {sun.date || 'Saved snapshot'}

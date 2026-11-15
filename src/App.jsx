@@ -9,35 +9,37 @@ import {
 } from './store/useMission.js';
 import { getDailySeed } from './engine/index.js';
 import { useReducedMotion } from './components/ui/useReducedMotion.js';
-import CitationsModal from './components/CitationsModal.jsx';
-import SettingsSheet from './components/SettingsSheet.jsx';
 import Starfield from './components/Starfield.jsx';
-import DevGallery from './screens/DevGallery.jsx';
 import HealthyOrbitModal from './screens/HealthyOrbitModal.jsx';
 const Allocate = lazy(() => import('./screens/Allocate.jsx'));
-const Briefing = lazy(() => import('./screens/Briefing.jsx'));
 const CheckIn = lazy(() => import('./screens/CheckIn.jsx'));
-const Ended = lazy(() => import('./screens/Ended.jsx'));
-const EventCard = lazy(() => import('./screens/EventCard.jsx'));
-const Report = lazy(() => import('./screens/Report.jsx'));
+const FirstMission = lazy(() => import('./screens/FirstMission.jsx'));
+const HowToPlay = lazy(() => import('./screens/HowToPlay.jsx'));
+const LearnMore = lazy(() => import('./screens/LearnMore.jsx'));
+const Play = lazy(() => import('./screens/Play.jsx'));
+const PlanetMap = lazy(() => import('./screens/PlanetMap.jsx'));
+const Result = lazy(() => import('./screens/Result.jsx'));
 const SafeOrbit = lazy(() => import('./screens/SafeOrbit.jsx'));
 const StickerAlbum = lazy(() => import('./screens/StickerAlbum.jsx'));
 const TeacherKit = lazy(() => import('./screens/TeacherKit.jsx'));
 const Title = lazy(() => import('./screens/Title.jsx'));
+const DevGallery = import.meta.env.DEV
+  ? lazy(() => import('./screens/DevGallery.jsx'))
+  : null;
 import { usePrefs } from './screens/usePrefs.js';
 import { speak } from './voice/speak.js';
 import './screens/flow.css';
 import './screens/classroom.css';
 
-const ROUTES = new Set(['#/', '#/album', '#/teacher', '#/safe', '#/dev']);
-
-function stateScreen(state) {
-  if (state.status === 'idle') return 'title';
-  if (state.status === 'ended') return 'ended';
-  if (state.step === 'event') return 'event';
-  if (state.step === 'report') return 'report';
-  return 'allocate';
-}
+const ROUTES = new Set([
+  '#/',
+  '#/how',
+  '#/learn',
+  '#/album',
+  '#/teacher',
+  '#/safe',
+  ...(import.meta.env.DEV ? ['#/dev'] : []),
+]);
 
 function ScreenSkeleton() {
   return (
@@ -56,30 +58,47 @@ export default function App() {
   const resetMission = useMission((mission) => mission.resetMission);
   const prefs = usePrefs();
   const [hash, setHash] = useState(() => (typeof window === 'undefined' ? '' : window.location.hash));
+  const [checkInSite, setCheckInSite] = useState('moon');
+  const [tutorialStep, setTutorialStep] = useState(null);
   const [dismissedBreakFor, setDismissedBreakFor] = useState(null);
   const [unlockedToast, setUnlockedToast] = useState('');
   const previousStickerIds = useRef(state.profile.stickers);
+  const hasPreviewStep = typeof window !== 'undefined'
+    && new URLSearchParams(window.location.search).has('s');
   const [flow, setFlow] = useState(() => {
     if (typeof window === 'undefined') return null;
-    const hasPreviewStep = new URLSearchParams(window.location.search).has('s');
     return !hasPreviewStep && useMission.getState().profile.missionsPlayed === 0 ? 'title' : null;
   });
   const reducedMotion = useReducedMotion();
   const stickerCatalog = useMemo(() => selectStickerCatalog(state), [state.profile.stickers]);
-  const announcedScreen = hash === '#/dev'
+  // The seeded fixture starts running, but a fresh profile still needs the entry flow.
+  const isPlaying = state.status === 'running'
+    && (state.profile.missionsPlayed > 0
+      || (hasPreviewStep && !['#/how', '#/learn', '#/album', '#/teacher', '#/safe'].includes(hash)));
+  const announcedScreen = import.meta.env.DEV && hash === '#/dev' && !isPlaying
     ? 'dev'
-    : hash === '#/album'
-      ? 'album'
-      : hash === '#/teacher'
-        ? 'teacher'
-        : hash === '#/safe'
-          ? 'safe'
-          : flow || stateScreen(state);
-  const capcomLine = announcedScreen === 'allocate' || announcedScreen === 'briefing'
+    : isPlaying
+      ? 'play'
+      : hash === '#/how'
+        ? 'how'
+        : hash === '#/learn'
+          ? 'learn'
+          : hash === '#/album'
+            ? 'album'
+            : hash === '#/teacher'
+              ? 'teacher'
+              : hash === '#/safe'
+                ? 'safe'
+                : state.status === 'ended'
+                  ? 'result'
+                  : flow || (state.status === 'ended' ? 'result' : 'title');
+  const capcomLine = announcedScreen === 'play' && state.step === 'allocate'
     ? selectAllocationTip(state)
-    : announcedScreen === 'report'
+    : announcedScreen === 'play' && state.step === 'report'
       ? state.lastOutcome?.capcom || ''
-      : announcedScreen === 'dev'
+      : announcedScreen === 'play' && state.step === 'event'
+        ? state.event?.kid || ''
+      : import.meta.env.DEV && announcedScreen === 'dev'
         ? state.lastOutcome?.capcom || state.event?.kid || 'Welcome, Flight Director! Your crew is ready.'
         : '';
 
@@ -109,7 +128,7 @@ export default function App() {
   }, [state.profile.stickers, stickerCatalog]);
 
   useEffect(() => {
-    if (prefs.readAloud !== 'all') return undefined;
+    if (prefs.readAloud !== 'all' || announcedScreen === 'how') return undefined;
     const timer = window.setTimeout(() => {
       const heading = document.querySelector('.oc-page h1, .oc-page h2')?.textContent?.trim();
       const announcement = [heading, capcomLine].filter(Boolean).join('. ');
@@ -120,43 +139,65 @@ export default function App() {
 
   const beginMission = (config) => {
     startMission(config);
-    setFlow(prefs.tutorialSeen ? null : 'briefing');
-  };
-  const finishBriefing = useCallback(() => {
-    prefs.patch({ tutorialSeen: true });
     setFlow(null);
+    setTutorialStep(prefs.tutorialSeen ? null : -1);
+    if (window.location.hash !== '#/') window.location.hash = '#/';
+  };
+  const finishTutorial = useCallback(() => {
+    prefs.patch({ tutorialSeen: true });
+    setTutorialStep(null);
   }, [prefs.patch]);
+  const replayTutorial = useCallback(() => {
+    setTutorialStep(-1);
+  }, []);
   const playAgain = () => {
     resetMission();
     setFlow('checkin');
+    if (window.location.hash !== '#/') window.location.hash = '#/';
+  };
+  const nextMission = () => {
+    const config = state.config.site === 'moon'
+      ? { ...state.config, site: 'mars' }
+      : { ...state.config, mode: 'daily', seed: getDailySeed() };
+    startMission(config);
+    setFlow(null);
+    setTutorialStep(null);
+    if (window.location.hash !== '#/') window.location.hash = '#/';
   };
 
-  if (hash === '#/dev') return <DevGallery />;
+  if (import.meta.env.DEV && hash === '#/dev' && !isPlaying && DevGallery) {
+    return (
+      <Suspense fallback={<ScreenSkeleton />}>
+        <DevGallery />
+      </Suspense>
+    );
+  }
 
-  let screenKey = flow || stateScreen(state);
+  let screenKey = flow || 'title';
   let screen;
-  if (hash === '#/album') {
-    screenKey = 'album';
-    screen = <StickerAlbum />;
-  } else if (hash === '#/teacher') {
-    screenKey = 'teacher';
-    screen = <TeacherKit />;
-  } else if (hash === '#/safe') {
-    screenKey = 'safe';
-    screen = <SafeOrbit />;
-  } else if (flow === 'title' || screenKey === 'title') {
-    screenKey = 'title';
+  if (isPlaying) {
+    screenKey = 'play';
     screen = (
-      <Title
-        onPlay={() => setFlow('checkin')}
-        onDaily={() => beginMission({
-          cadetName: 'Cadet Nova',
-          avatar: 'violet',
-          site: 'moon',
-          difficulty: 'cadet',
-          mode: 'daily',
-          seed: getDailySeed(),
-        })}
+      <Play
+        guidedStep={tutorialStep === null ? null : Math.max(0, tutorialStep)}
+        onReplayTutorial={replayTutorial}
+      />
+    );
+  } else if (hash === '#/how') {
+    screenKey = 'how';
+    screen = (
+      <HowToPlay
+        onContinue={() => {
+          setFlow('planet-map');
+          if (window.location.hash !== '#/') window.location.hash = '#/';
+        }}
+      />
+    );
+  } else if (hash === '#/learn') {
+    screenKey = 'learn';
+    screen = (
+      <LearnMore
+        onBack={() => { window.location.hash = '#/'; }}
         onClass={(code) => beginMission({
           cadetName: 'Cadet Nova',
           avatar: 'cyan',
@@ -167,30 +208,58 @@ export default function App() {
         })}
       />
     );
+  } else if (hash === '#/album') {
+    screenKey = 'album';
+    screen = <StickerAlbum />;
+  } else if (hash === '#/teacher') {
+    screenKey = 'teacher';
+    screen = <TeacherKit />;
+  } else if (hash === '#/safe') {
+    screenKey = 'safe';
+    screen = <SafeOrbit />;
+  } else if (state.status === 'ended') {
+    screenKey = 'result';
+    screen = (
+      <Result
+        onPlayAgain={playAgain}
+        onNextMission={nextMission}
+        onNavigate={(target) => { window.location.hash = target; }}
+      />
+    );
+  } else if (flow === 'planet-map') {
+    screenKey = 'planet-map';
+    screen = (
+      <PlanetMap
+        onSelectSite={(site) => {
+          setCheckInSite(site);
+          setFlow('checkin');
+        }}
+        onBack={() => setFlow('title')}
+      />
+    );
   } else if (flow === 'checkin') {
     screenKey = 'checkin';
-    screen = <CheckIn onStart={beginMission} onBack={() => setFlow('title')} />;
-  } else if (flow === 'briefing') {
-    screenKey = 'briefing';
     screen = (
-      <div className="relative">
-        <Allocate />
-        <Briefing onDone={finishBriefing} />
-      </div>
+      <CheckIn
+        onStart={beginMission}
+        onBack={() => setFlow('planet-map')}
+        initialSite={checkInSite}
+      />
     );
-  } else if (screenKey === 'event') {
-    screen = <EventCard />;
-  } else if (screenKey === 'report') {
-    screen = <Report />;
-  } else if (screenKey === 'ended') {
-    screen = <Ended onPlayAgain={playAgain} />;
   } else {
-    screenKey = 'allocate';
-    screen = <Allocate />;
+    screenKey = 'title';
+    screen = (
+      <Title
+        onPlay={() => setFlow('planet-map')}
+        onHowToPlay={() => {
+          setFlow(null);
+          window.location.hash = '#/how';
+        }}
+      />
+    );
   }
 
-  const breakEligible = !['#/album', '#/teacher', '#/safe'].includes(hash)
-    && state.status === 'ended'
+  const breakEligible = screenKey === 'result'
     && selectShouldSuggestBreak(state);
   const breakOpen = breakEligible && dismissedBreakFor !== state.profile.missionsPlayed;
 
@@ -198,15 +267,15 @@ export default function App() {
     <main className="oc-page bg-[var(--color-bg)] px-4 text-[var(--color-text)]">
       <Starfield />
       <div className="oc-page__content">
-        <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <nav className="oc-route-nav" aria-label="Outpost pages">
-            <a href="#/">Mission</a>
-            <a href="#/album">Sticker album</a>
-            <a href="#/teacher">Teacher kit</a>
-            <a href="#/safe">Why this is safe</a>
-          </nav>
-          <SettingsSheet />
-        </header>
+        {tutorialStep !== null && isPlaying && (
+          <Suspense fallback={<ScreenSkeleton />}>
+            <FirstMission
+              step={tutorialStep}
+              onStepChange={setTutorialStep}
+              onFinish={finishTutorial}
+            />
+          </Suspense>
+        )}
         <AnimatePresence>
           {unlockedToast && (
             <motion.div
@@ -231,9 +300,6 @@ export default function App() {
             <Suspense fallback={<ScreenSkeleton />}>{screen}</Suspense>
           </motion.div>
         </AnimatePresence>
-        <footer className="mt-8 flex justify-center border-t border-white/10 pt-4">
-          <CitationsModal />
-        </footer>
       </div>
       <HealthyOrbitModal
         open={breakOpen}
