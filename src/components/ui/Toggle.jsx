@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function Toggle({ label, checked, onChange, disabled = false }) {
   return (
     <button

@@ -1,3 +1,4 @@
+import React from 'react';
 import { HeartPulse, Leaf, Shield } from 'lucide-react';
 import { useMission } from '../../store/useMission.js';
 

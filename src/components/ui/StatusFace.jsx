@@ -1,3 +1,4 @@
+import React from 'react';
 import { Frown, Meh, Smile } from 'lucide-react';
 
 export function getStatus(value) {

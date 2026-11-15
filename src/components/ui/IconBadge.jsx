@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function IconBadge({ icon: Icon, children, color = 'var(--color-accent)' }) {
   return (
     <span className="oc-icon-badge" style={{ '--badge-color': color }}>

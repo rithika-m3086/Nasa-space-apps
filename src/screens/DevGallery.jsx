@@ -1,7 +1,9 @@
+import React from 'react';
 import { useState } from 'react';
 import { HeartPulse, Leaf, Shield, Sparkles, Zap } from 'lucide-react';
 import { useMission } from '../store/useMission.js';
 import Starfield from '../components/Starfield.jsx';
+import OutpostViewport from '../components/OutpostViewport.jsx';
 import {
   BigButton,
   CapcomBubble,
@@ -23,6 +25,10 @@ function speak(text) {
   }
 }
 
+function updateScene(patch) {
+  useMission.setState((state) => ({ ...state, ...patch }));
+}
+
 export default function DevGallery() {
   const state = useMission();
   const prefs = usePrefs();
@@ -33,6 +39,27 @@ export default function DevGallery() {
     { kind: 'shield', value: state.gauges.shield },
     { kind: 'science', value: state.science },
   ];
+  const setGauge = (key, value) => updateScene({
+    gauges: { ...state.gauges, [key]: Number(value) },
+  });
+  const setSite = (site) => updateScene({
+    config: { ...state.config, site },
+    sunlight: site === 'mars' ? 0.7 : 0.9,
+    dust: site === 'mars' ? 0.3 : 0,
+  });
+  const setEventKind = (kind) => updateScene({
+    event: kind === 'none' ? null : {
+      id: `gallery-${kind}`,
+      sites: [state.config.site],
+      kind,
+      title: 'Scene preview',
+      kid: 'This is a scene preview.',
+      why: 'Choose a different scene in the gallery controls.',
+      options: [],
+      science: { headline: 'Scene preview', mission: 'Gallery', instrument: 'Game estimate', fact: 'Preview only.', sourceId: 'TODO-VERIFY' },
+    },
+    step: kind === 'none' ? 'allocate' : 'event',
+  });
 
   return (
     <main className="oc-page bg-[var(--color-bg)] text-[var(--color-text)]">
@@ -52,6 +79,75 @@ export default function DevGallery() {
         </header>
 
         <div className="grid gap-5 lg:grid-cols-2">
+          <Card className="lg:col-span-2">
+            <h2 className="oc-display mb-4 text-2xl">Outpost viewport</h2>
+            <OutpostViewport />
+            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <label className="flex min-h-12 flex-col gap-2 text-sm font-semibold">
+                Landing site
+                <select
+                  className="min-h-12 rounded-xl border border-white/20 bg-[var(--color-panel-raised)] px-3 text-[var(--color-text)]"
+                  value={state.config.site}
+                  onChange={(event) => setSite(event.target.value)}
+                >
+                  <option value="moon">Moon</option>
+                  <option value="mars">Mars</option>
+                </select>
+              </label>
+              <label className="flex min-h-12 flex-col gap-2 text-sm font-semibold">
+                Event overlay
+                <select
+                  className="min-h-12 rounded-xl border border-white/20 bg-[var(--color-panel-raised)] px-3 text-[var(--color-text)]"
+                  value={state.event?.kind || 'none'}
+                  onChange={(event) => setEventKind(event.target.value)}
+                >
+                  <option value="none">No event</option>
+                  <option value="flare">Solar flare</option>
+                  <option value="dust">Dust storm</option>
+                  <option value="micrometeorite">Micrometeorite</option>
+                </select>
+              </label>
+              <label className="flex min-h-12 flex-col gap-2 text-sm font-semibold">
+                Sunlight: {Math.round(state.sunlight * 100)}%
+                <input
+                  className="min-h-12 accent-[var(--color-warning)]"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={state.sunlight}
+                  onChange={(event) => updateScene({ sunlight: Number(event.target.value) })}
+                />
+              </label>
+              <label className="flex min-h-12 flex-col gap-2 text-sm font-semibold">
+                Dust: {Math.round(state.dust * 100)}%
+                <input
+                  className="min-h-12 accent-[var(--color-warning)]"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={state.dust}
+                  onChange={(event) => updateScene({ dust: Number(event.target.value) })}
+                />
+              </label>
+              {Object.entries(state.gauges).map(([key, value]) => (
+                <label key={key} className="flex min-h-12 flex-col gap-2 text-sm font-semibold capitalize">
+                  {key}: {Math.round(value)}%
+                  <input
+                    className="min-h-12 accent-[var(--color-accent)]"
+                    type="range"
+                    min="0"
+                    max="100"
+                    step="1"
+                    value={value}
+                    onChange={(event) => setGauge(key, event.target.value)}
+                  />
+                </label>
+              ))}
+            </div>
+          </Card>
+
           <Card>
             <h2 className="oc-display mb-4 text-2xl">Big buttons</h2>
             <div className="flex flex-wrap gap-3">

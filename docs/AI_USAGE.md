@@ -5,3 +5,4 @@ date | who | prompt id | what AI generated | what a human reviewed/changed
 2026-11-15 | Copilot | r2-mission-engine | Deterministic mission engine, placeholder event tuning, and balance simulations | Human must review gameplay balance, event effects, and rank thresholds.
 2026-11-15 | Copilot | science-data-layer | Site facts, source references, radiation comparisons, NASA snapshot fetcher, and tests | Human must verify TODO-VERIFY citations and review fetched NASA metadata.
 2026-11-15 | Copilot | mission-control-hud | Design tokens, accessible HUD components, starfield, and Dev Gallery | Human must manually verify mobile layout, keyboard focus, and reduced-motion behavior.
+2026-11-15 | Copilot | outpost-viewport | Responsive animated SVG habitat scene and interactive Dev Gallery controls | Human must review scene art, 360px/1366px scaling, and reduced-motion behavior.

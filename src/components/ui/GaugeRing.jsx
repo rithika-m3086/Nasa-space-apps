@@ -1,6 +1,7 @@
-import { animate, motion, useMotionValue, useTransform } from 'framer-motion';
+import React from 'react';
+import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion';
 import { HeartPulse, Leaf, Shield, Zap } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useReducedMotion } from './useReducedMotion.js';
 import StatusFace, { getStatus } from './StatusFace.jsx';
 
@@ -17,7 +18,9 @@ export default function GaugeRing({ kind, value = 0 }) {
   const status = getStatus(safeValue);
   const reducedMotion = useReducedMotion();
   const count = useMotionValue(safeValue);
-  const roundedCount = useTransform(count, (current) => Math.round(current));
+  const [displayValue, setDisplayValue] = useState(Math.round(safeValue));
+
+  useMotionValueEvent(count, 'change', (current) => setDisplayValue(Math.round(current)));
 
   useEffect(() => {
     const controls = animate(count, safeValue, {
@@ -74,7 +77,7 @@ export default function GaugeRing({ kind, value = 0 }) {
         </svg>
         <Icon className="oc-gauge__icon" aria-hidden="true" />
         <motion.span className="oc-gauge__number">
-          {roundedCount}
+          {displayValue}
           <span className="text-sm">%</span>
         </motion.span>
       </div>

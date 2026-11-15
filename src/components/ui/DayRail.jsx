@@ -1,3 +1,4 @@
+import React from 'react';
 import { Rocket } from 'lucide-react';
 import { selectDayLabel } from '../../store/useMission.js';
 
