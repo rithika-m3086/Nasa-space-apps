@@ -2,4 +2,4 @@
 - [ ] TODO-VERIFY: Find a NASA page supporting the ISS estimate of about 100 mSv per six months.
 - [ ] TODO-VERIFY: Locate the NTRS Baseline Values and Assumptions Document URL and verify its intended use.
 - [ ] TODO-VERIFY: Locate authoritative Mars REMS documentation and verify the source metadata.
-- [ ] TODO-VERIFY: Confirm DONKI FLR/CME access with DEMO_KEY or NASA_API_KEY; this fetch produced empty fallback arrays.
+- [ ] TODO-VERIFY: Confirm DONKI FLR/CME access with DEMO_KEY or NASA_API_KEY; current fetch returns HTTP 404/400 and writes null-valued placeholder records.

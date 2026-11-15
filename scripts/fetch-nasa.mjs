@@ -55,15 +55,19 @@ function imageRecords(payload, query) {
   });
 }
 
-async function collect(label, url, transform, errors) {
+async function collect(label, url, transform, errors, fallback = []) {
   try {
     return transform(await fetchJson(url, label));
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error(`[data:fetch] ${label}: ${message}`);
     errors.push({ source: label, message });
-    return [];
+    return fallback;
   }
+}
+
+function donkiPlaceholder() {
+  return [{ class: null, peakTime: null, id: null, link: null, placeholder: true }];
 }
 
 async function writeSnapshot(name, snapshot) {
@@ -92,8 +96,8 @@ async function main() {
 
   await mkdir(DATA_DIR, { recursive: true });
   const [flr, cme, ...imageResults] = await Promise.all([
-    collect('DONKI FLR', donkiUrl('FLR'), donkiRecords, errors),
-    collect('DONKI CME', donkiUrl('CME'), donkiRecords, errors),
+    collect('DONKI FLR', donkiUrl('FLR'), donkiRecords, errors, donkiPlaceholder()),
+    collect('DONKI CME', donkiUrl('CME'), donkiRecords, errors, donkiPlaceholder()),
     ...IMAGE_QUERIES.map((query) => collect(
       `NASA Images "${query}"`,
       imageSearch(query),
@@ -120,7 +124,7 @@ async function main() {
     `[data:fetch] Saved ${flr.length} FLR, ${cme.length} CME, and ${imageItems.length} image records.`,
   );
   if (errors.length) {
-    console.error(`[data:fetch] ${errors.length} request(s) failed; snapshots include empty fallback arrays.`);
+    console.error(`[data:fetch] ${errors.length} request(s) failed; snapshots include fallback placeholders.`);
   }
 }
 

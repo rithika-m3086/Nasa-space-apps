@@ -1,19 +1,35 @@
 {
-  "generatedAt": "2026-11-15T11:29:35.533Z",
+  "generatedAt": "2026-11-15T12:11:49.892Z",
   "range": {
     "startDate": "2026-08-17",
     "endDate": "2026-11-15"
   },
-  "flr": [],
-  "cme": [],
+  "flr": [
+    {
+      "class": null,
+      "peakTime": null,
+      "id": null,
+      "link": null,
+      "placeholder": true
+    }
+  ],
+  "cme": [
+    {
+      "class": null,
+      "peakTime": null,
+      "id": null,
+      "link": null,
+      "placeholder": true
+    }
+  ],
   "errors": [
     {
       "source": "DONKI CME",
-      "message": "TODO-VERIFY: DONKI endpoint returned HTTP 400 during data fetch."
+      "message": "DONKI CME returned HTTP 400"
     },
     {
       "source": "DONKI FLR",
-      "message": "TODO-VERIFY: DONKI endpoint returned HTTP 404 during data fetch."
+      "message": "DONKI FLR returned HTTP 404"
     }
   ]
 }
