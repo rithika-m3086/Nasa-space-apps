@@ -1,0 +1,175 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--color-bg);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.oc-page {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.oc-page__content {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 76rem);
+  margin-inline: auto;
+  padding-block: 2rem 4rem;
+}
+
+.oc-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.oc-card {
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid rgb(154 166 209 / 18%);
+  border-radius: var(--radius-card);
+  background: rgb(21 27 54 / 92%);
+  box-shadow: var(--shadow-card);
+}
+
+.oc-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  padding: 0.7rem 1rem;
+  color: var(--color-text);
+  font-weight: 650;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 180ms var(--spring);
+}
+
+.oc-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.oc-button--primary {
+  background: var(--color-accent);
+  box-shadow: 0 8px 24px rgb(139 92 246 / 28%);
+}
+
+.oc-button--secondary {
+  border-color: rgb(154 166 209 / 30%);
+  background: var(--color-panel-raised);
+}
+
+.oc-button--ghost {
+  background: transparent;
+}
+
+.oc-button:not(:disabled):hover {
+  filter: brightness(1.12);
+}
+
+.oc-icon-button {
+  width: 48px;
+  min-width: 48px;
+  padding: 0;
+}
+
+.oc-gauge {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  text-align: center;
+}
+
+.oc-gauge__visual {
+  position: relative;
+  display: grid;
+  width: min(100%, 9rem);
+  aspect-ratio: 1;
+  place-items: center;
+}
+
+.oc-gauge__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.gauge-track,
+.gauge-progress {
+  fill: none;
+  stroke-width: 6;
+}
+
+.gauge-track {
+  stroke: rgb(154 166 209 / 24%);
+}
+
+.gauge-progress {
+  stroke: var(--gauge-color);
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.gauge-progress--shield {
+  transform: none;
+}
+
+.oc-gauge__icon {
+  position: absolute;
+  top: 28%;
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--gauge-color);
+}
+
+.oc-gauge__number {
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.oc-gauge__label {
+  font-weight: 650;
+}
+
+.oc-gauge__low .oc-gauge__visual {
+  animation: gentle-pulse 2.8s ease-in-out infinite;
+}

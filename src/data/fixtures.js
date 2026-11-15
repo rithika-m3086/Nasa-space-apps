@@ -1,3 +1,5 @@
+import { radiationReality } from './radiationReality.js';
+
 export const fixtureEvent = {
   id: 'fixture-flare',
   sites: ['moon', 'mars'],
@@ -90,30 +92,8 @@ export const fixtureDebrief = {
     { day: 6, text: 'Small science steps added up across the mission.' },
   ],
   radiation: {
-    crewDoseMsvPerDay: 0.67,
-    refs: [
-      {
-        id: 'mars-cruise',
-        label: 'Mars cruise',
-        msvPerDay: 1.8,
-        note: 'Reference estimate from a Mars-trip study.',
-        sourceId: 'rad-cruise',
-      },
-      {
-        id: 'mars-surface',
-        label: 'Mars surface',
-        msvPerDay: 0.67,
-        note: 'Curiosity RAD measurement reported in mission materials.',
-        sourceId: 'rad-cruise',
-      },
-      {
-        id: 'iss',
-        label: 'International Space Station',
-        msvPerDay: 0.55,
-        note: 'Approximate daily average from 100 mSv over six months.',
-        sourceId: 'rad-cruise',
-      },
-    ],
+    crewDoseMsvPerDay: radiationReality.crewDoseMsvPerDay,
+    refs: radiationReality.refs,
   },
   shareCode: 'AP-M-7DAYS',
   stickersEarned: ['first-step', 'power-pro', 'life-keeper', 'shield-star', 'science-scout'],

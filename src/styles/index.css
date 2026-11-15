@@ -1,5 +1,8 @@
 @import '@fontsource-variable/fredoka';
 @import '@fontsource-variable/lexend';
+@import './tokens.css';
+@import './components.css';
+@import './components-layout.css';
 
 @tailwind base;
 @tailwind components;

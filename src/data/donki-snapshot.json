@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-11-15T11:29:35.533Z",
+  "range": {
+    "startDate": "2026-08-17",
+    "endDate": "2026-11-15"
+  },
+  "flr": [],
+  "cme": [],
+  "errors": [
+    {
+      "source": "DONKI CME",
+      "message": "TODO-VERIFY: DONKI endpoint returned HTTP 400 during data fetch."
+    },
+    {
+      "source": "DONKI FLR",
+      "message": "TODO-VERIFY: DONKI endpoint returned HTTP 404 during data fetch."
+    }
+  ]
+}

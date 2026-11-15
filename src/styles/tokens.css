@@ -1,0 +1,23 @@
+:root {
+  color-scheme: dark;
+  --color-bg: #0B1020;
+  --color-panel: #151B36;
+  --color-panel-raised: #1D264A;
+  --color-text: #F5F7FF;
+  --color-muted: #9AA6D1;
+  --color-power: #22D3EE;
+  --color-life: #FF5FA2;
+  --color-shield: #FFD23F;
+  --color-science: #7CFF6B;
+  --color-accent: #8B5CF6;
+  --color-success: #7CFF6B;
+  --color-warning: #FFD23F;
+  --color-danger: #FF5FA2;
+  --font-display: 'Fredoka Variable', sans-serif;
+  --font-body: 'Lexend Variable', sans-serif;
+  --radius-card: 1.25rem;
+  --radius-control: 0.9rem;
+  --shadow-card: 0 18px 48px rgb(3 7 18 / 28%);
+  --focus-ring: 0 0 0 3px var(--color-bg), 0 0 0 6px var(--color-accent);
+  --spring: cubic-bezier(0.2, 0.85, 0.3, 1.2);
+}
