@@ -1,0 +1,304 @@
+{
+  "generatedAt": "2026-11-15T12:11:49.892Z",
+  "queries": [
+    "lunar south pole",
+    "Shackleton crater",
+    "Jezero crater",
+    "solar flare",
+    "Mars dust storm",
+    "International Space Station plants",
+    "spacesuit",
+    "Artemis"
+  ],
+  "items": [
+    {
+      "query": "lunar south pole",
+      "title": "The Lunar South Pole",
+      "nasa_id": "PIA13523",
+      "center": "JPL",
+      "date_created": "2010-09-27T22:24:40Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA13523/PIA13523~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA13523/collection.json"
+    },
+    {
+      "query": "lunar south pole",
+      "title": "Moon Base Briefing at Max Power in KSC Studio",
+      "nasa_id": "KSC-20261107-PH-KLS02_0143",
+      "center": "KSC",
+      "date_created": "2026-11-07T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/KSC-20261107-PH-KLS02_0143/KSC-20261107-PH-KLS02_0143~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/KSC-20261107-PH-KLS02_0143/collection.json"
+    },
+    {
+      "query": "lunar south pole",
+      "title": "Moon Base Briefing at Max Power in KSC Studio",
+      "nasa_id": "KSC-20261107-PH-KLS02_0097",
+      "center": "KSC",
+      "date_created": "2026-11-07T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/KSC-20261107-PH-KLS02_0097/KSC-20261107-PH-KLS02_0097~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/KSC-20261107-PH-KLS02_0097/collection.json"
+    },
+    {
+      "query": "lunar south pole",
+      "title": "Moon Base Briefing at Max Power in KSC Studio",
+      "nasa_id": "KSC-20261107-PH-KLS02_0099",
+      "center": "KSC",
+      "date_created": "2026-11-07T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/KSC-20261107-PH-KLS02_0099/KSC-20261107-PH-KLS02_0099~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/KSC-20261107-PH-KLS02_0099/collection.json"
+    },
+    {
+      "query": "lunar south pole",
+      "title": "Moon Base Briefing at Max Power in KSC Studio",
+      "nasa_id": "KSC-20261107-PH-KLS02_0043",
+      "center": "KSC",
+      "date_created": "2026-11-07T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/KSC-20261107-PH-KLS02_0043/KSC-20261107-PH-KLS02_0043~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/KSC-20261107-PH-KLS02_0043/collection.json"
+    },
+    {
+      "query": "Jezero crater",
+      "title": "Ancient Jezero Crater (Illustration)",
+      "nasa_id": "PIA24172",
+      "center": "JPL",
+      "date_created": "2020-10-20T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA24172/PIA24172~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA24172/collection.json"
+    },
+    {
+      "query": "Jezero crater",
+      "title": "Jezero Crater Delta",
+      "nasa_id": "PIA26252",
+      "center": "JPL",
+      "date_created": "2023-12-05T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA26252/PIA26252~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA26252/collection.json"
+    },
+    {
+      "query": "Jezero crater",
+      "title": "Jezero Crater",
+      "nasa_id": "PIA25350",
+      "center": "JPL",
+      "date_created": "2022-05-27T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA25350/PIA25350~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA25350/collection.json"
+    },
+    {
+      "query": "Jezero crater",
+      "title": "Jezero Crater Rim",
+      "nasa_id": "PIA25903",
+      "center": "JPL",
+      "date_created": "2023-04-19T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA25903/PIA25903~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA25903/collection.json"
+    },
+    {
+      "query": "Jezero crater",
+      "title": "Jezero Crater Flyover",
+      "nasa_id": "PIA22905",
+      "center": "JPL",
+      "date_created": "2018-12-13T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA22905/PIA22905~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA22905/collection.json"
+    },
+    {
+      "query": "solar flare",
+      "title": "Major Solar Flare",
+      "nasa_id": "PIA21958",
+      "center": "JPL",
+      "date_created": "2017-09-18T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA21958/PIA21958~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA21958/collection.json"
+    },
+    {
+      "query": "solar flare",
+      "title": "Major Solar Flare",
+      "nasa_id": "PIA21949",
+      "center": "JPL",
+      "date_created": "2017-09-11T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA21949/PIA21949~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA21949/collection.json"
+    },
+    {
+      "query": "solar flare",
+      "title": "Mid-level Solar Flare",
+      "nasa_id": "GSFC_20171208_Archive_e000963",
+      "center": "GSFC",
+      "date_created": "2017-12-08T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000963/GSFC_20171208_Archive_e000963~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000963/collection.json"
+    },
+    {
+      "query": "solar flare",
+      "title": "Mid-level Solar Flare",
+      "nasa_id": "GSFC_20171208_Archive_e000962",
+      "center": "GSFC",
+      "date_created": "2017-12-08T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000962/GSFC_20171208_Archive_e000962~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000962/collection.json"
+    },
+    {
+      "query": "solar flare",
+      "title": "NASA's SDO Shows Images of Significant Solar Flare",
+      "nasa_id": "GSFC_20171208_Archive_e001210",
+      "center": "GSFC",
+      "date_created": "2017-12-08T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001210/GSFC_20171208_Archive_e001210~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001210/collection.json"
+    },
+    {
+      "query": "Mars dust storm",
+      "title": "2018 Giant Dust Storm on Mars",
+      "nasa_id": "PIA22519",
+      "center": "JPL",
+      "date_created": "2018-06-13T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA22519/PIA22519~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA22519/collection.json"
+    },
+    {
+      "query": "Mars dust storm",
+      "title": "Dust storm in the Thaumasia region of Mars",
+      "nasa_id": "PIA02985",
+      "center": "JPL",
+      "date_created": "2000-11-04T23:29:51Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA02985/PIA02985~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA02985/collection.json"
+    },
+    {
+      "query": "Mars dust storm",
+      "title": "Early Spring Dust Storms at the North Pole of Mars",
+      "nasa_id": "PIA10789",
+      "center": "JPL",
+      "date_created": "2008-06-13T22:27:03Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA10789/PIA10789~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA10789/collection.json"
+    },
+    {
+      "query": "Mars dust storm",
+      "title": "Recent Mars and Earth Dust Storms Compared",
+      "nasa_id": "PIA02807",
+      "center": "JPL",
+      "date_created": "2000-09-12T15:15:09Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA02807/PIA02807~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA02807/collection.json"
+    },
+    {
+      "query": "Mars dust storm",
+      "title": "Mars Before and After Dust Storm",
+      "nasa_id": "PIA22487",
+      "center": "JPL",
+      "date_created": "2018-07-19T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA22487/PIA22487~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA22487/collection.json"
+    },
+    {
+      "query": "International Space Station plants",
+      "title": "Caring for chile pepper plants on the International Space Station",
+      "nasa_id": "iss066e008110",
+      "center": "JSC",
+      "date_created": "2021-10-20T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/iss066e008110/iss066e008110~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/iss066e008110/collection.json"
+    },
+    {
+      "query": "International Space Station plants",
+      "title": "Caring for chile pepper plants on the International Space Station",
+      "nasa_id": "iss066e008125",
+      "center": "JSC",
+      "date_created": "2021-10-20T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/iss066e008125/iss066e008125~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/iss066e008125/collection.json"
+    },
+    {
+      "query": "International Space Station plants",
+      "title": "Space Zinnias: Growing Seeds from Space",
+      "nasa_id": "KSC-20181127-PH_JBS01_0005",
+      "center": "KSC",
+      "date_created": "2018-11-27T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/KSC-20181127-PH_JBS01_0005/KSC-20181127-PH_JBS01_0005~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/KSC-20181127-PH_JBS01_0005/collection.json"
+    },
+    {
+      "query": "International Space Station plants",
+      "title": "Space Zinnias: Growing Seeds from Space",
+      "nasa_id": "KSC-20181127-PH_JBS01_0002",
+      "center": "KSC",
+      "date_created": "2018-11-27T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/KSC-20181127-PH_JBS01_0002/KSC-20181127-PH_JBS01_0002~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/KSC-20181127-PH_JBS01_0002/collection.json"
+    },
+    {
+      "query": "International Space Station plants",
+      "title": "Space Zinnias: Growing Seeds from Space",
+      "nasa_id": "KSC-20181127-PH_JBS01_0013",
+      "center": "KSC",
+      "date_created": "2018-11-27T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/KSC-20181127-PH_JBS01_0013/KSC-20181127-PH_JBS01_0013~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/KSC-20181127-PH_JBS01_0013/collection.json"
+    },
+    {
+      "query": "spacesuit",
+      "title": "Spacesuit Designer Amy Ross",
+      "nasa_id": "PIA23978",
+      "center": "JPL",
+      "date_created": "2020-07-28T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/PIA23978/PIA23978~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/PIA23978/collection.json"
+    },
+    {
+      "query": "spacesuit",
+      "title": "Artemis III Lunar Spacesuit",
+      "nasa_id": "axemu-prada-spacesuit-mockup-20241007-423",
+      "center": "JSC",
+      "date_created": "2024-10-07T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/axemu-prada-spacesuit-mockup-20241007-423/axemu-prada-spacesuit-mockup-20241007-423~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/axemu-prada-spacesuit-mockup-20241007-423/collection.json"
+    },
+    {
+      "query": "spacesuit",
+      "title": "Artemis III Lunar Spacesuit",
+      "nasa_id": "axemu-prada-spacesuit-mockup-20241007-085-axedit",
+      "center": "JSC",
+      "date_created": "2024-10-07T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/axemu-prada-spacesuit-mockup-20241007-085-axedit/axemu-prada-spacesuit-mockup-20241007-085-axedit~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/axemu-prada-spacesuit-mockup-20241007-085-axedit/collection.json"
+    },
+    {
+      "query": "spacesuit",
+      "title": "axemu-prada-spacesuit-mockup-20241007-085",
+      "nasa_id": "axemu-prada-spacesuit-mockup-20241007-085",
+      "center": "JSC",
+      "date_created": "2024-10-07T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/axemu-prada-spacesuit-mockup-20241007-085/axemu-prada-spacesuit-mockup-20241007-085~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/axemu-prada-spacesuit-mockup-20241007-085/collection.json"
+    },
+    {
+      "query": "spacesuit",
+      "title": "Axiom Space’s AxEMU Spacesuit",
+      "nasa_id": "axemu-axiom-suitcover-20230621-dgb-axp00653",
+      "center": "JSC",
+      "date_created": "2025-07-30T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/axemu-axiom-suitcover-20230621-dgb-axp00653/axemu-axiom-suitcover-20230621-dgb-axp00653~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/axemu-axiom-suitcover-20230621-dgb-axp00653/collection.json"
+    },
+    {
+      "query": "Artemis",
+      "title": "Artemis II Poster - 11 x 17",
+      "nasa_id": "Artemis II second poster_11x17_300ppi_CMYK_Right",
+      "center": "HQ",
+      "date_created": "2023-04-06T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/Artemis II second poster_11x17_300ppi_CMYK_Right/Artemis II second poster_11x17_300ppi_CMYK_Right~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/Artemis II second poster_11x17_300ppi_CMYK_Right/collection.json"
+    },
+    {
+      "query": "Artemis",
+      "title": "Artemis II Launch ",
+      "nasa_id": "KSC-04012026-Artemis II_Launch-1",
+      "center": "KSC",
+      "date_created": "2026-04-01T00:00:00Z",
+      "thumbnail_href": "https://images-assets.nasa.gov/image/KSC-04012026-Artemis II_Launch-1/KSC-04012026-Artemis II_Launch-1~thumb.jpg",
+      "details_link": "https://images-assets.nasa.gov/image/KSC-04012026-Artemis II_Launch-1/collection.json"
+    }
+  ],
+  "errors": []
+}

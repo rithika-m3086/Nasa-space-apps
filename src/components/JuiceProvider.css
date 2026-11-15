@@ -1,0 +1,55 @@
+.juice-provider {
+  min-height: 100vh;
+}
+
+.juice-provider--shake {
+  animation: juice-shake 220ms ease-in-out;
+}
+
+.juice-float-layer {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.juice-float {
+  position: absolute;
+  top: 45%;
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 999px;
+  padding: 0.5rem 0.8rem;
+  background: var(--color-panel);
+  color: var(--color-science);
+  font-weight: 700;
+  box-shadow: var(--shadow-card);
+  white-space: nowrap;
+}
+
+.juice-float--life {
+  color: var(--color-life);
+}
+
+.juice-float--shield {
+  color: var(--color-shield);
+}
+
+.juice-float--power {
+  color: var(--color-power);
+}
+
+html[data-text-scale='A+'] {
+  font-size: 112.5%;
+}
+
+html[data-text-scale='A++'] {
+  font-size: 125%;
+}
+
+@keyframes juice-shake {
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+}
+
